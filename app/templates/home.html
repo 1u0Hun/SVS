@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_content %}
+<div class="page-header">
+ <div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            {% set nums = info['vuln_count_by_criticality']['normal'] %}
+             <div id="circle" class="col-lg-3">
+                 <h1 class="text-center" style="margin-top: 55px">{{ nums['high'] }}</h1>
+             </div>
+             <div id="circle" class="col-lg-6" style="border-color: orange ;margin-left: 200px; ">
+                 <h1 class="text-center" style="margin-top: 55px">{{ nums['med'] }}</h1>
+             </div>
+            <div id="circle" class="col-lg-12" style="border-color: #1fa3ff; margin-left: 200px;">
+                <h1 class="text-center" style="margin-top: 55px">{{ nums['low'] }}</h1>
+             </div>
+        </div>
+    </div>
+ </div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">整体安全</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+        <div class="col-lg-3 text text-center" >
+            目标总数
+            <p><h3>{{ info['targets_count'] }}</h3></p>
+        </div>
+        <div class="col-lg-2 text text-center">
+            总扫描次数
+            <p><h3>{{ info['scans_conducted_count'] }}</h3></p>
+        </div>
+        <div class="col-lg-2 text text-center">
+            开放的漏洞
+            <p><h3>{{ info['vulnerabilities_open_count'] }}</h3></p>
+        </div>
+        <div class="col-lg-2 text text-center">
+            进行的扫描
+            <p><h3>{{ info['scans_running_count'] }}</h3></p>
+        </div>
+        <div class="col-lg-3 text text-center">
+            等待的扫描
+            <p><h3>{{ info['scans_waiting_count'] }}</h3></p>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="panel panel-danger col-lg-5">
+            <div class="panel-heading">高危站点</div>
+            <table class="table">
+                <th>站点</th><th>漏洞数 </th>
+                {% for target in info['most_vulnerable_targets'] %}
+                <tr>
+                    <td id="red"><a href="/target_detail/{{ target['target_id'] }}">{{ target['address']}}</a></td>
+                    <td>
+                        <button class="btn btn-danger btn-xs text-center " data-toggle="tooltip"  title="高危:{{ target['high_vuln_count']}}" >{{ target['high_vuln_count']}}</button>
+                        <button class="btn btn-warning btn-xs text-center " data-toggle="tooltip"  title="中危:{{ target['med_vuln_count']}}">{{ target['med_vuln_count']}}</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="panel panel-warning col-lg-5 col-lg-push-1">
+            <div class="panel-heading">漏洞Top</div>
+            <table class="table">
+                <th>漏洞</th>
+                <th>数量 </th>
+                {% for vuln in info['top_vulnerabilities'] %}
+                <tr>
+                    <td>{{  vuln['name']}}</td>
+                    <td id="red">{{ vuln['count'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

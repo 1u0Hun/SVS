@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block page_content %}
+<div class="page-header">
+<h3 id ="title" contenteditable="true">{{ vuln['vt_name'] }}</h3>
+    <br>
+    <br>
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse1">
+					漏洞描述
+				</a>
+			</h4>
+		</div>
+		<div id="collapse1" class="panel-collapse collapse in">
+			<div class="panel-body">
+				{{ vuln['description'] | safe }}
+			</div>
+		</div>
+	</div>
+
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse2">
+					攻击细节
+				</a>
+			</h4>
+		</div>
+		<div id="collapse2" class="panel-collapse collapse in">
+			<div class="panel-body">
+				{{ vuln['details'] | safe }}
+			</div>
+		</div>
+	</div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse3">
+					HTTP响应
+				</a>
+			</h4>
+		</div>
+		<div id="collapse3" class="panel-collapse collapse in">
+			<div class="panel-body">
+				{{ vuln['request'] | safe}}
+			</div>
+		</div>
+	</div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse4">
+					该漏洞影响
+				</a>
+			</h4>
+		</div>
+		<div id="collapse4" class="panel-collapse collapse in">
+			<div class="panel-body">
+				{{ vuln['impact']| safe }}
+			</div>
+		</div>
+	</div>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse5">
+					如何修复这个漏洞
+				</a>
+			</h4>
+		</div>
+		<div id="collapse5" class="panel-collapse collapse in">
+			<div class="panel-body">
+				{{ vuln['recommendation'] | safe     }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}漏洞{% endblock %}
+{% block page_content %}
+<div class="page-header">
+<button class="btn btn-primary " data-toggle="modal" data-target="#myModal">
+	新增扫描
+</button>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					添加任务
+				</h4>
+			</div>
+            <form class="form-horizontal" role="form" action="/Target" method="post">
+			<div class="modal-body">
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="description" name="description"
+                               placeholder="请输入目标描述">
+                    </div>
+                    <label for="urls" class="col-sm-2 control-label">扫描目标</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" class="form-control" id="urls" name="urls"
+                               placeholder="请输入目标IP">
+                        </textarea>
+                    </div>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="submit" class="btn btn-primary">
+					提交更改
+				</button>
+			</div>
+            </form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<table class="table table-bordered table-hover ">
+	<caption>漏洞概括</caption>
+	<thead>
+		<tr>
+            <th>危害程度</th>
+            <th>漏洞描述</th>
+			<th>地址url</th>
+            <th>漏洞标签</th>
+            <th>参数</th>
+            <th>项目描述</th>
+            <th>扫描时间</th>
+            <th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for vuln in vulns['vulnerabilities'] %}
+         {% if loop.index % 4 ==0  %}
+             <tr class="active">
+             {% elif loop.index % 4 ==1 %}
+             <tr class="success">
+             {% elif loop.index % 4 == 2 %}
+             <tr  class="warning">
+             {% elif loop.index % 4 ==3 %}
+             <tr  class="danger">
+         {% endif %}
+            <td>
+            {% if(vuln['severity']==3 ) %}高
+                {% elif(vuln['severity']==2) %}中
+                {% elif(vuln['severity'])==1 %}低
+                {% else %}信息
+                {% endif %}
+            </td>
+            <td>{{ vuln['vt_name'] }}</td>
+			<td>{{ vuln['affects_url'] }}</td>
+            <td>{{ vuln['tags'][0] }}</td>
+            <td>{{ vuln['affects_detail'] }}</td>
+            <td>{{ vuln['target_description'] }}</td>
+            <td>{{ vuln['last_seen'] }}</td>
+            <td>
+                <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-default btn-success " onclick="recheckvuln('{{ vuln['vuln_id'] }}')">再次验证</button>
+                </div>
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-default btn-warning"><a href="/vuln_detail/{{ vuln['vuln_id'] }}">查看</a></button>
+                </div>
+
+                </div>
+            </td>
+		</tr>
+    {% endfor %}
+
+	</tbody>
+</table>
+</form>
+</div>
+{% endblock %}

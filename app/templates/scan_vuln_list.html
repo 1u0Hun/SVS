@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}扫描-整体安全{% endblock %}
+{% block page_content %}
+<div class="page-header">
+     <ul class="nav nav-tabs">
+      <li><a href="/scan_detail/{{ url }}">整体扫描情况</a></li>
+      <li class="active"><a href="/scan_list/{{ url }}">漏洞列表</a></li>
+    </ul>
+</div>
+    <table class="table table-bordered table-hover">
+{#	<caption>漏洞列表</caption>#}
+	<thead>
+		<tr>
+            <th>危害程度</th>
+			<th>地址url</th>
+			<th>漏洞描述</th>
+            <th>漏洞标签</th>
+            <th>参数</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for vuln in vulns %}
+         {% if loop.index % 4 ==0  %}
+             <tr class="active">
+             {% elif loop.index % 4 ==1 %}
+             <tr class="success">
+             {% elif loop.index % 4 == 2 %}
+             <tr  class="warning">
+             {% elif loop.index % 4 ==3 %}
+             <tr  class="danger">
+         {% endif %}
+            <td>{% if(vuln['severity']==3 ) %}高
+                {% elif(vuln['severity']==2) %}中
+                {% elif(vuln['severity'])==1 %}低
+                {% else %}信息
+                {% endif %}
+            </td>
+        <td><a href="/scan_vuln_detail/{{ url }}&{{ vuln['vuln_id'] }}">{{ vuln['affects_url'] }}</a></td>
+			<td>{{ vuln['vt_name'] }}</td>
+            <td>{{ vuln['tags'][0] }}</td>
+            <td>{{ vuln['affects_detail'] }}</td>
+		</tr>
+        {% endfor %}
+
+	</tbody>
+</table>
+{% endblock %}

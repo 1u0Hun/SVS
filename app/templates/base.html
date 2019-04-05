@@ -1,0 +1,48 @@
+{% extends "bootstrap/base.html" %}
+
+<meta charset="utf-8">
+{%  block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="../static/js/global.js"></script>
+    <script type="text/javascript" src="../static/js/hoverTip.js"></script>
+{#    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>#}
+    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.js"></script>
+{#    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.common.min.js"></script>#}
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+{% endblock %}
+{% block title %}Sangfor Security Tools{% endblock %}
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+ <div class="container">
+ <div class="navbar-header">
+ <button type="button" class="navbar-toggle"
+ data-toggle="collapse" data-target=".navbar-collapse">
+ <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ </button>
+ <a class="navbar-brand" href="/"><img src="http://download.sangfor.com.cn/Source/default/images/logo.jpg" alt="SSWV"></a>
+ </div>
+ <div class="navbar-collapse collapse">
+ <ul class="nav navbar-nav">
+     <li><a href="/Home">Home</a></li>
+     <li><a href="/Target">Target</a></li>
+     <li><a href="/Scan">Scan</a></li>
+     <li><a href="/Vuln">Vuln</a></li>
+     <li><a href="/Report">Report</a></li>
+     <li><a href="/Config">Config</a></li>
+     <li><a href="/About">About Us</a></li>
+ </ul>
+ </div>
+ </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="container">
+ {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
